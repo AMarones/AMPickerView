@@ -1,9 +1,9 @@
 //
 //  AMActionPickerView.swift
-//  Recarga TIM
+//  AMActionPickerView.swift
 //
-//  Created by Alexandre Marones on 17/08/15.
-//  Copyright (c) 2015 M4U. All rights reserved.
+//  Created by Alexandre Marones on 18/08/15.
+//  Copyright (c) 2015 Alexandre Marones. All rights reserved.
 //
 
 import UIKit
@@ -27,7 +27,7 @@ class AMPickerView: NSObject {
     private var _doneButtonTitleColor = UIColor(red: 255/255, green: 210/255, blue: 0/255, alpha: 1.0)
     
     /// Font name used for done button title
-    private var _doneButtonFontName = "Teuton24Pro"
+    private var _doneButtonFontName = "Helvetica"
     
     /// Title for cancel button
     private var _cancelButtonTitle = "Cancel"
@@ -36,19 +36,22 @@ class AMPickerView: NSObject {
     private var _cancelButtonTitleColor = UIColor(red: 255/255, green: 210/255, blue: 0/255, alpha: 1.0)
     
     /// Font name used for cancel button title
-    private var _cancelButtonFontName = "Teuton24Pro"
+    private var _cancelButtonFontName = "Helvetica"
     
     /// The color used in picker text row in list
     private var _pickerTextColor = UIColor(red: 102/255.0, green: 102/255.0, blue: 102/255.0, alpha: 1.0)
     
     /// Font name used for picker text row in list
-    private var _pickerTextFontName = "Teuton24Pro"
+    private var _pickerTextFontName = "Helvetica"
     
     /// Title in top bar view
     private var _topBarTitle = "Title"
     
     /// Font name used for title in top bar view
-    private var _topBarViewTextFontName = "Teuton24Pro"
+    private var _topBarViewTextFontName = "Helvetica"
+    
+    /// Toolbar view background color
+    private var _topBarViewBackgroundColor = UIColor(red: 23/255, green: 128/255, blue: 210/255, alpha: 1.0)
     
     /// Intern usage
     private var alertTitle = ""
@@ -68,6 +71,16 @@ class AMPickerView: NSObject {
     var delegate: AMPickerViewDelegate!
     
     var datasource = [String]()
+    
+    var topBarViewBackgroundColor: UIColor {
+        get  {
+            return _topBarViewBackgroundColor
+        }
+        
+        set {
+            _topBarViewBackgroundColor = newValue
+        }
+    }
     
     var topBarViewTextFontName: String {
         get  {
@@ -139,7 +152,6 @@ class AMPickerView: NSObject {
         }
     }
     
-    /// The color used in picker text list
     var pickerTextColor: UIColor {
         get  {
             return _pickerTextColor
@@ -179,7 +191,7 @@ class AMPickerView: NSObject {
         //Create the toolbar view - the view witch will hold our 2 buttons
         var toolFrame = CGRectMake(0, 0, screenSize.width - 16, 40)
         var toolView: UIView = UIView(frame: toolFrame)
-        toolView.backgroundColor = getDefaultBlueColor()
+        toolView.backgroundColor = _topBarViewBackgroundColor
         
         let maskLayer = CAShapeLayer()
         maskLayer.path = UIBezierPath(roundedRect: toolFrame, byRoundingCorners: UIRectCorner.TopRight | UIRectCorner.TopLeft, cornerRadii: CGSize(width: 3, height: 3)).CGPath
@@ -188,7 +200,7 @@ class AMPickerView: NSObject {
         
         var titleFrame: CGRect = CGRectMake(16, 0, 100, 40) // CGRectMake(left), top, width, height) - left and top are like margins
         var titleView: UILabel = UILabel(frame: titleFrame)
-        let title = NSAttributedString(string: _topBarTitle, attributes: [NSFontAttributeName:UIFont(name: FontName, size: 16.0)!, NSForegroundColorAttributeName:UIColor.whiteColor()])
+        let title = NSAttributedString(string: _topBarTitle, attributes: [NSFontAttributeName:UIFont(name: _topBarViewTextFontName, size: 16.0)!, NSForegroundColorAttributeName:UIColor.whiteColor()])
         titleView.attributedText = title
         
         
@@ -241,7 +253,7 @@ extension AMPickerView: UIPickerViewDataSource {
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
         return 1
     }
-
+    
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         return datasource.count
     }
@@ -263,7 +275,7 @@ extension AMPickerView: UIPickerViewDelegate {
         
         return pickerLabel
     }
-
+    
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         selectedIndex = row
     }

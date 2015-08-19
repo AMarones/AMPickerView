@@ -13,7 +13,7 @@
 		AC7D06B01B84ABCA0099F8F0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AC7D06AF1B84ABCA0099F8F0 /* Images.xcassets */; };
 		AC7D06B31B84ABCA0099F8F0 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = AC7D06B11B84ABCA0099F8F0 /* LaunchScreen.xib */; };
 		AC7D06BF1B84ABCA0099F8F0 /* SampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7D06BE1B84ABCA0099F8F0 /* SampleTests.swift */; };
-		AC7D06CA1B84FF550099F8F0 /* AMPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7D06C91B84FF550099F8F0 /* AMPickerView.swift */; };
+		AC7D06CD1B8504FB0099F8F0 /* AMPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7D06CC1B8504FB0099F8F0 /* AMPickerView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,7 +37,7 @@
 		AC7D06B81B84ABCA0099F8F0 /* SampleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SampleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		AC7D06BD1B84ABCA0099F8F0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AC7D06BE1B84ABCA0099F8F0 /* SampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTests.swift; sourceTree = "<group>"; };
-		AC7D06C91B84FF550099F8F0 /* AMPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AMPickerView.swift; sourceTree = "<group>"; };
+		AC7D06CC1B8504FB0099F8F0 /* AMPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AMPickerView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,7 +61,7 @@
 		AC7D069A1B84ABCA0099F8F0 = {
 			isa = PBXGroup;
 			children = (
-				AC7D06C81B84FF550099F8F0 /* AMPickerView */,
+				AC7D06CB1B8504FB0099F8F0 /* AMPickerView */,
 				AC7D06A51B84ABCA0099F8F0 /* Sample */,
 				AC7D06BB1B84ABCA0099F8F0 /* SampleTests */,
 				AC7D06A41B84ABCA0099F8F0 /* Products */,
@@ -115,12 +115,13 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		AC7D06C81B84FF550099F8F0 /* AMPickerView */ = {
+		AC7D06CB1B8504FB0099F8F0 /* AMPickerView */ = {
 			isa = PBXGroup;
 			children = (
-				AC7D06C91B84FF550099F8F0 /* AMPickerView.swift */,
+				AC7D06CC1B8504FB0099F8F0 /* AMPickerView.swift */,
 			);
-			path = AMPickerView;
+			name = AMPickerView;
+			path = ../AMPickerView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -224,7 +225,7 @@
 			files = (
 				AC7D06AB1B84ABCA0099F8F0 /* ViewController.swift in Sources */,
 				AC7D06A91B84ABCA0099F8F0 /* AppDelegate.swift in Sources */,
-				AC7D06CA1B84FF550099F8F0 /* AMPickerView.swift in Sources */,
+				AC7D06CD1B8504FB0099F8F0 /* AMPickerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
