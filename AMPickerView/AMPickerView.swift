@@ -189,7 +189,7 @@ class AMPickerView: NSObject {
         alertPicker!.view.addSubview(pickerView)
         
         //Create the toolbar view - the view witch will hold our 2 buttons
-        let toolFrame = CGRectMake(0, 0, screenSize.width - 16, 40)
+        let toolFrame = CGRectMake(0, 0, screenSize.width - 20, 40)
         let toolView: UIView = UIView(frame: toolFrame)
         toolView.backgroundColor = _topBarViewBackgroundColor
         
