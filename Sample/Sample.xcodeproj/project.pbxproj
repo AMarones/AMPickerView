@@ -168,6 +168,8 @@
 		AC7D069B1B84ABCA0099F8F0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftMigration = 0710;
+				LastSwiftUpdateCheck = 0710;
 				LastUpgradeCheck = 0630;
 				TargetAttributes = {
 					AC7D06A21B84ABCA0099F8F0 = {
@@ -421,6 +423,7 @@
 				AC7D06C41B84ABCA0099F8F0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		AC7D06C51B84ABCA0099F8F0 /* Build configuration list for PBXNativeTarget "SampleTests" */ = {
 			isa = XCConfigurationList;
@@ -429,6 +432,7 @@
 				AC7D06C71B84ABCA0099F8F0 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

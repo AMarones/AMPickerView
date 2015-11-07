@@ -175,11 +175,11 @@ class AMPickerView: NSObject {
         
         alertPicker!.modalInPopover = true
         
-        var screenSize = UIScreen.mainScreen().bounds.size
+        let screenSize = UIScreen.mainScreen().bounds.size
         
         // Create a frame (placeholder/wrapper) for the picker and then create the picker
-        var pickerFrame: CGRect = CGRectMake(0, 40, screenSize.width - 16, 80) // CGRectMake(left), top, width, height) - left and top are like margins
-        var pickerView  = UIPickerView(frame: pickerFrame)
+        let pickerFrame: CGRect = CGRectMake(0, 40, screenSize.width - 16, 80) // CGRectMake(left), top, width, height) - left and top are like margins
+        let pickerView  = UIPickerView(frame: pickerFrame)
         
         // set the pickers datasource and delegate
         pickerView.delegate = self
@@ -189,31 +189,31 @@ class AMPickerView: NSObject {
         alertPicker!.view.addSubview(pickerView)
         
         //Create the toolbar view - the view witch will hold our 2 buttons
-        var toolFrame = CGRectMake(0, 0, screenSize.width - 16, 40)
-        var toolView: UIView = UIView(frame: toolFrame)
+        let toolFrame = CGRectMake(0, 0, screenSize.width - 16, 40)
+        let toolView: UIView = UIView(frame: toolFrame)
         toolView.backgroundColor = _topBarViewBackgroundColor
         
         let maskLayer = CAShapeLayer()
-        maskLayer.path = UIBezierPath(roundedRect: toolFrame, byRoundingCorners: UIRectCorner.TopRight | UIRectCorner.TopLeft, cornerRadii: CGSize(width: 3, height: 3)).CGPath
+        maskLayer.path = UIBezierPath(roundedRect: toolFrame, byRoundingCorners: [UIRectCorner.TopRight, UIRectCorner.TopLeft], cornerRadii: CGSize(width: 3, height: 3)).CGPath
         toolView.layer.mask = maskLayer
         
         
-        var titleFrame: CGRect = CGRectMake(16, 0, 100, 40) // CGRectMake(left), top, width, height) - left and top are like margins
-        var titleView: UILabel = UILabel(frame: titleFrame)
+        let titleFrame: CGRect = CGRectMake(16, 0, 100, 40) // CGRectMake(left), top, width, height) - left and top are like margins
+        let titleView: UILabel = UILabel(frame: titleFrame)
         let title = NSAttributedString(string: _topBarTitle, attributes: [NSFontAttributeName:UIFont(name: _topBarViewTextFontName, size: 16.0)!, NSForegroundColorAttributeName:UIColor.whiteColor()])
         titleView.attributedText = title
         
         
         //add buttons to the view
-        var cancelButtonFrame: CGRect = CGRectMake(screenSize.width - 190, 0, 100, 40)
-        var cancelButton: UIButton = UIButton(frame: cancelButtonFrame)
+        let cancelButtonFrame: CGRect = CGRectMake(screenSize.width - 190, 0, 100, 40)
+        let cancelButton: UIButton = UIButton(frame: cancelButtonFrame)
         let cancelButtonTitle = NSAttributedString(string: _cancelButtonTitle, attributes: [NSFontAttributeName:UIFont(name: _cancelButtonFontName, size: 16.0)!, NSForegroundColorAttributeName:_cancelButtonTitleColor])
         cancelButton.setAttributedTitle(cancelButtonTitle, forState: UIControlState.Normal)
         cancelButton.addTarget(self, action: "cancelAction:", forControlEvents: UIControlEvents.TouchDown)
         
         //add buttons to the view
-        var doneButtonFrame: CGRect = CGRectMake(screenSize.width - 100, 0, 80, 40)
-        var doneButton: UIButton = UIButton(frame: doneButtonFrame)
+        let doneButtonFrame: CGRect = CGRectMake(screenSize.width - 100, 0, 80, 40)
+        let doneButton: UIButton = UIButton(frame: doneButtonFrame)
         let doneButtonTitle = NSAttributedString(string: _doneButtonTitle, attributes: [NSFontAttributeName:UIFont(name: _doneButtonFontName, size: 16.0)!, NSForegroundColorAttributeName:_doneButtonTitleColor])
         doneButton.setAttributedTitle(doneButtonTitle, forState: UIControlState.Normal)
         doneButton.addTarget(self, action: "doneAction:", forControlEvents: UIControlEvents.TouchDown)
@@ -264,9 +264,9 @@ extension AMPickerView: UIPickerViewDataSource {
 
 extension AMPickerView: UIPickerViewDelegate {
     
-    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView!) -> UIView {
+    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView {
         let pickerLabel = UILabel()
-        var titleData = datasource[row]
+        let titleData = datasource[row]
         
         let myTitle = NSAttributedString(string: titleData.uppercaseString, attributes: [NSFontAttributeName:UIFont(name: _pickerTextFontName, size: 18.0)!, NSForegroundColorAttributeName:_pickerTextColor])
         

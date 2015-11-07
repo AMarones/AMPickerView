@@ -75,7 +75,7 @@ class ViewController: UIViewController, AMPickerViewDelegate {
     }
     
     func doneButtonPressed(index: Int) {
-        var selectedValue = datasource[index]
+        let selectedValue = datasource[index]
         
         if sentBy == sentByValues {
             buttonSelectValue.setTitle(selectedValue, forState: UIControlState.Normal)
