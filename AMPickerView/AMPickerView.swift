@@ -177,8 +177,14 @@ class AMPickerView: NSObject {
         
         let screenSize = UIScreen.mainScreen().bounds.size
         
+        var widthWithMargin = screenSize.width - 16
+        
+        if #available(iOS 9.0, *) {
+            widthWithMargin = screenSize.width - 20
+        }
+        
         // Create a frame (placeholder/wrapper) for the picker and then create the picker
-        let pickerFrame: CGRect = CGRectMake(0, 40, screenSize.width - 16, 80) // CGRectMake(left), top, width, height) - left and top are like margins
+        let pickerFrame: CGRect = CGRectMake(0, 40, widthWithMargin, 170) // CGRectMake(left), top, width, height) - left and top are like margins
         let pickerView  = UIPickerView(frame: pickerFrame)
         
         // set the pickers datasource and delegate
@@ -188,8 +194,10 @@ class AMPickerView: NSObject {
         //Add the picker to the alert controller
         alertPicker!.view.addSubview(pickerView)
         
+        NSFoundationVersionNumber_iOS_8_0
+        
         //Create the toolbar view - the view witch will hold our 2 buttons
-        let toolFrame = CGRectMake(0, 0, screenSize.width - 20, 40)
+        let toolFrame = CGRectMake(0, 0, widthWithMargin, 40)
         let toolView: UIView = UIView(frame: toolFrame)
         toolView.backgroundColor = _topBarViewBackgroundColor
         
