@@ -217,14 +217,14 @@ class AMPickerView: NSObject {
         let cancelButton: UIButton = UIButton(frame: cancelButtonFrame)
         let cancelButtonTitle = NSAttributedString(string: _cancelButtonTitle, attributes: [NSFontAttributeName:UIFont(name: _cancelButtonFontName, size: 16.0)!, NSForegroundColorAttributeName:_cancelButtonTitleColor])
         cancelButton.setAttributedTitle(cancelButtonTitle, forState: UIControlState.Normal)
-        cancelButton.addTarget(self, action: "cancelAction:", forControlEvents: UIControlEvents.TouchDown)
+        cancelButton.addTarget(self, action: "cancelAction:", forControlEvents: UIControlEvents.TouchUpInside)
         
         //add buttons to the view
         let doneButtonFrame: CGRect = CGRectMake(screenSize.width - 100, 0, 80, 40)
         let doneButton: UIButton = UIButton(frame: doneButtonFrame)
         let doneButtonTitle = NSAttributedString(string: _doneButtonTitle, attributes: [NSFontAttributeName:UIFont(name: _doneButtonFontName, size: 16.0)!, NSForegroundColorAttributeName:_doneButtonTitleColor])
         doneButton.setAttributedTitle(doneButtonTitle, forState: UIControlState.Normal)
-        doneButton.addTarget(self, action: "doneAction:", forControlEvents: UIControlEvents.TouchDown)
+        doneButton.addTarget(self, action: "doneAction:", forControlEvents: UIControlEvents.TouchUpInside)
         
         
         //add the toolbar to the alert controller
