@@ -18,6 +18,8 @@ class AMPickerView: NSObject {
     
     // MARK: - Private properties
     
+    private let screenSize = UIScreen.mainScreen().bounds.size
+    
     private var selectedIndex: Int = 0
     
     /// Title for done button
@@ -25,6 +27,9 @@ class AMPickerView: NSObject {
     
     /// The color used for done button title
     private var _doneButtonTitleColor = UIColor(red: 255/255, green: 210/255, blue: 0/255, alpha: 1.0)
+    
+    /// The color used for done button highlighted
+    private var _doneButtonHighlightedTitleColor = UIColor(red: 255/255, green: 210/255, blue: 0/255, alpha: 0.5)
     
     /// Font name used for done button title
     private var _doneButtonFontName = "Helvetica"
@@ -34,6 +39,9 @@ class AMPickerView: NSObject {
     
     /// The color used for cancel button title
     private var _cancelButtonTitleColor = UIColor(red: 255/255, green: 210/255, blue: 0/255, alpha: 1.0)
+    
+    /// The color used for cancel button highlighted
+    private var _cancelButtonHighlightedTitleColor = UIColor(red: 255/255, green: 210/255, blue: 0/255, alpha: 0.5)
     
     /// Font name used for cancel button title
     private var _cancelButtonFontName = "Helvetica"
@@ -175,8 +183,6 @@ class AMPickerView: NSObject {
         
         alertPicker!.modalInPopover = true
         
-        let screenSize = UIScreen.mainScreen().bounds.size
-        
         var widthWithMargin = screenSize.width - 16
         
         if #available(iOS 9.0, *) {
@@ -211,28 +217,40 @@ class AMPickerView: NSObject {
         let title = NSAttributedString(string: _topBarTitle, attributes: [NSFontAttributeName:UIFont(name: _topBarViewTextFontName, size: 16.0)!, NSForegroundColorAttributeName:UIColor.whiteColor()])
         titleView.attributedText = title
         
+        //add the toolbar to the alert controller
+        toolView.addSubview(titleView)
+        toolView.addSubview(buildCancelButton())
+        toolView.addSubview(buildDoneButton())
         
-        //add buttons to the view
+        alertPicker!.view.addSubview(toolView)
+    }
+    
+    private func buildCancelButton() -> UIButton {
         let cancelButtonFrame: CGRect = CGRectMake(screenSize.width - 190, 0, 100, 40)
         let cancelButton: UIButton = UIButton(frame: cancelButtonFrame)
         let cancelButtonTitle = NSAttributedString(string: _cancelButtonTitle, attributes: [NSFontAttributeName:UIFont(name: _cancelButtonFontName, size: 16.0)!, NSForegroundColorAttributeName:_cancelButtonTitleColor])
+        let cancelButtonTitleHighlighted = NSAttributedString(string: _cancelButtonTitle, attributes: [NSFontAttributeName:UIFont(name: _cancelButtonFontName, size: 16.0)!, NSForegroundColorAttributeName:_doneButtonHighlightedTitleColor])
+        
         cancelButton.setAttributedTitle(cancelButtonTitle, forState: UIControlState.Normal)
+        cancelButton.setAttributedTitle(cancelButtonTitleHighlighted, forState: UIControlState.Highlighted)
+        
         cancelButton.addTarget(self, action: "cancelAction:", forControlEvents: UIControlEvents.TouchUpInside)
         
-        //add buttons to the view
+        return cancelButton
+    }
+    
+    private func buildDoneButton() -> UIButton {
         let doneButtonFrame: CGRect = CGRectMake(screenSize.width - 100, 0, 80, 40)
         let doneButton: UIButton = UIButton(frame: doneButtonFrame)
         let doneButtonTitle = NSAttributedString(string: _doneButtonTitle, attributes: [NSFontAttributeName:UIFont(name: _doneButtonFontName, size: 16.0)!, NSForegroundColorAttributeName:_doneButtonTitleColor])
+        let doneButtonTitleHighlighted = NSAttributedString(string: _doneButtonTitle, attributes: [NSFontAttributeName:UIFont(name: _doneButtonFontName, size: 16.0)!, NSForegroundColorAttributeName:_doneButtonHighlightedTitleColor])
+        
         doneButton.setAttributedTitle(doneButtonTitle, forState: UIControlState.Normal)
+        doneButton.setAttributedTitle(doneButtonTitleHighlighted, forState: UIControlState.Highlighted)
+        
         doneButton.addTarget(self, action: "doneAction:", forControlEvents: UIControlEvents.TouchUpInside)
         
-        
-        //add the toolbar to the alert controller
-        toolView.addSubview(titleView)
-        toolView.addSubview(cancelButton)
-        toolView.addSubview(doneButton)
-        
-        alertPicker!.view.addSubview(toolView)
+        return doneButton
     }
     
     func show() {
