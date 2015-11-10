@@ -15,6 +15,7 @@
 		AC7D06BF1B84ABCA0099F8F0 /* SampleTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7D06BE1B84ABCA0099F8F0 /* SampleTests.swift */; };
 		AC7D06CD1B8504FB0099F8F0 /* AMPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AC7D06CC1B8504FB0099F8F0 /* AMPickerView.swift */; };
 		CE7461D51BF18F680094DB50 /* SinglePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7461D41BF18F680094DB50 /* SinglePickerViewController.swift */; };
+		CE7461D71BF192EC0094DB50 /* MultiplesPickersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE7461D61BF192EC0094DB50 /* MultiplesPickersViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		AC7D06BE1B84ABCA0099F8F0 /* SampleTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleTests.swift; sourceTree = "<group>"; };
 		AC7D06CC1B8504FB0099F8F0 /* AMPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AMPickerView.swift; sourceTree = "<group>"; };
 		CE7461D41BF18F680094DB50 /* SinglePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SinglePickerViewController.swift; sourceTree = "<group>"; };
+		CE7461D61BF192EC0094DB50 /* MultiplesPickersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiplesPickersViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -84,6 +86,7 @@
 			children = (
 				AC7D06A81B84ABCA0099F8F0 /* AppDelegate.swift */,
 				AC7D06AA1B84ABCA0099F8F0 /* ViewController.swift */,
+				CE7461D61BF192EC0094DB50 /* MultiplesPickersViewController.swift */,
 				CE7461D41BF18F680094DB50 /* SinglePickerViewController.swift */,
 				AC7D06AC1B84ABCA0099F8F0 /* Main.storyboard */,
 				AC7D06AF1B84ABCA0099F8F0 /* Images.xcassets */,
@@ -231,6 +234,7 @@
 				CE7461D51BF18F680094DB50 /* SinglePickerViewController.swift in Sources */,
 				AC7D06AB1B84ABCA0099F8F0 /* ViewController.swift in Sources */,
 				AC7D06A91B84ABCA0099F8F0 /* AppDelegate.swift in Sources */,
+				CE7461D71BF192EC0094DB50 /* MultiplesPickersViewController.swift in Sources */,
 				AC7D06CD1B8504FB0099F8F0 /* AMPickerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
