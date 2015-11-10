@@ -25,7 +25,8 @@ class ViewController: UIViewController, AMPickerViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        
+        alertPickerView = AMPickerView(delegate: self, ownerViewControler: self)
     }
 
     override func didReceiveMemoryWarning() {
@@ -34,17 +35,13 @@ class ViewController: UIViewController, AMPickerViewDelegate {
     }
     
     func showPickerView() {
-        alertPickerView = AMPickerView(delegate: self, datasource: datasource, ownerViewControler: self)
-        
         var pickerTitle = "Select Card"
         
         if sentBy == sentByValues {
             pickerTitle = "Select Value"
         }
-        
-        alertPickerView.topBarTitle = pickerTitle
-        
-        alertPickerView.show()
+                
+        alertPickerView.show(pickerTitle, datasource: datasource)
     }
 
 
