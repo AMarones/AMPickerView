@@ -16,74 +16,50 @@ protocol AMPickerViewDelegate {
 class AMPickerView: NSObject {
     
     
+    // MARK: - Intern usage
+    
+    private let _alertTitle             = ""
+    private let _alertMessage           = "\n\n\n\n\n\n\n\n\n\n"
+    private var _selectedIndex: Int     = 0
+    private let _screenSize             = UIScreen.mainScreen().bounds.size
+    
+
     // MARK: - Private properties
     
-    private let _screenSize = UIScreen.mainScreen().bounds.size
-    
-    private var _selectedIndex: Int = 0
-    
-    /// Title for done button
-    private var _doneButtonTitle = "Done"
-    
-    /// The color used for done button title
-    private var _doneButtonTitleColor = UIColor(red: 255/255, green: 210/255, blue: 0/255, alpha: 1.0)
-    
-    /// The color used for done button highlighted
-    private var _doneButtonHighlightedTitleColor = UIColor(red: 255/255, green: 210/255, blue: 0/255, alpha: 0.5)
-    
-    /// Font name used for done button title
-    private var _doneButtonFontName = "Helvetica"
-    
-    /// Title for cancel button
-    private var _cancelButtonTitle = "Cancel"
-    
-    /// The color used for cancel button title
-    private var _cancelButtonTitleColor = UIColor(red: 255/255, green: 210/255, blue: 0/255, alpha: 1.0)
-    
-    /// The color used for cancel button highlighted
-    private var _cancelButtonHighlightedTitleColor = UIColor(red: 255/255, green: 210/255, blue: 0/255, alpha: 0.5)
-    
-    /// Font name used for cancel button title
-    private var _cancelButtonFontName = "Helvetica"
-    
-    /// The color used in picker text row in list
-    private var _pickerTextColor = UIColor(red: 102/255.0, green: 102/255.0, blue: 102/255.0, alpha: 1.0)
-    
-    /// Font name used for picker text row in list
-    private var _pickerTextFontName = "Helvetica"
-    
-    /// Title in top bar view
-    private var _topBarTitle = "Title"
-    
-    /// Font name used for title in top bar view
-    private var _topBarViewTextFontName = "Helvetica"
-    
-    /// Toolbar view background color
-    private var _topBarViewBackgroundColor = UIColor(red: 23/255, green: 128/255, blue: 210/255, alpha: 1.0)
-    
-    /// Intern usage
-    private let _alertTitle = ""
-    
-    /// Intern usage
-    private let _alertMessage = "\n\n\n\n\n\n\n\n\n\n"
-    
-    /// Alert Picker
-    private var _alertPicker: UIAlertController?
-    
-    /// Title Label
-    private var _titleLabel: UILabel?
-    
-    /// Datasource
-    private var _datasource = [String]()
-    
-    /// The parent (owner) view controller
-    private var ownerViewControler: UIViewController!
+    private var _alertPicker:           UIAlertController?
+    private var _titleLabel:            UILabel?
+    private var _pickerView:            UIPickerView?
+    private var _ownerViewControler:    UIViewController!
+    private var _delegate:              AMPickerViewDelegate!
+    private var _datasource             = [String]()
     
     
-    // MARK: - Public properties
+    // MARK: - Custom Titles
     
-    var delegate: AMPickerViewDelegate!
+    private var _doneButtonTitle            = "Done"
+    private var _topBarTitle                = "Title"
+    private var _cancelButtonTitle          = "Cancel"
     
+    
+    // MARK: - Custom FontNames
+    
+    private var _doneButtonFontName         = "Helvetica"
+    private var _cancelButtonFontName       = "Helvetica"
+    private var _pickerTextFontName         = "Helvetica"
+    private var _topBarViewTextFontName     = "Helvetica"
+    
+    
+    // MARK: - Custom Colors
+    
+    private var _doneButtonTitleColor               = UIColor(red: 255/255, green: 210/255, blue: 0/255, alpha: 1.0)
+    private var _doneButtonHighlightedTitleColor    = UIColor(red: 255/255, green: 210/255, blue: 0/255, alpha: 0.5)
+    private var _cancelButtonTitleColor             = UIColor(red: 255/255, green: 210/255, blue: 0/255, alpha: 1.0)
+    private var _cancelButtonHighlightedTitleColor  = UIColor(red: 255/255, green: 210/255, blue: 0/255, alpha: 0.5)
+    private var _pickerTextColor                    = UIColor(red: 102/255.0, green: 102/255.0, blue: 102/255.0, alpha: 1.0)
+    private var _topBarViewBackgroundColor          = UIColor(red: 23/255, green: 128/255, blue: 210/255, alpha: 1.0)
+    
+    
+    // MARK: - Setup Custom Layout
     
     var topBarViewBackgroundColor: UIColor {
         get  {
@@ -175,25 +151,34 @@ class AMPickerView: NSObject {
         }
     }
     
+    
+    // MARK: - Imp
+    
+    // Use this for dynamic titles and datasources
     convenience init(delegate: AMPickerViewDelegate, ownerViewControler: UIViewController) {
         self.init()
         
-        self.delegate = delegate
-        self.ownerViewControler = ownerViewControler
+        _delegate = delegate
+        _ownerViewControler = ownerViewControler
         
         setupActionPicker()
     }
     
+    // Use this for single title and datasources
     convenience init(delegate: AMPickerViewDelegate, title: String, datasource: [String], ownerViewControler: UIViewController) {
         self.init()
         
-        self.delegate = delegate
-        self.topBarTitle = title
-        self.ownerViewControler = ownerViewControler
+        topBarTitle = title
+        
+        _delegate = delegate
+        _ownerViewControler = ownerViewControler
         _datasource = datasource
         
         setupActionPicker()
     }
+    
+    
+    // MARK: - Private Methods
     
     private func setupActionPicker() {
         _alertPicker = UIAlertController(title: _alertTitle, message: _alertMessage, preferredStyle: UIAlertControllerStyle.ActionSheet)
@@ -208,18 +193,18 @@ class AMPickerView: NSObject {
         
         // Create a frame (placeholder/wrapper) for the picker and then create the picker
         let pickerFrame: CGRect = CGRectMake(0, 40, widthWithMargin, 170) // CGRectMake(left), top, width, height) - left and top are like margins
-        let pickerView  = UIPickerView(frame: pickerFrame)
+        _pickerView  = UIPickerView(frame: pickerFrame)
         
         // set the pickers datasource and delegate
-        pickerView.delegate = self
-        pickerView.dataSource = self
+        _pickerView!.delegate = self
+        _pickerView!.dataSource = self
         
-        //Add the picker to the alert controller
-        _alertPicker!.view.addSubview(pickerView)
+        // Add the picker to the alert controller
+        _alertPicker!.view.addSubview(_pickerView!)
         
         NSFoundationVersionNumber_iOS_8_0
         
-        //Create the toolbar view - the view witch will hold our 2 buttons
+        // Create the toolbar view - the view witch will hold our 2 buttons
         let toolFrame = CGRectMake(0, 0, widthWithMargin, 40)
         let toolView: UIView = UIView(frame: toolFrame)
         toolView.backgroundColor = topBarViewBackgroundColor
@@ -250,7 +235,7 @@ class AMPickerView: NSObject {
         let cancelButtonFrame: CGRect = CGRectMake(_screenSize.width - 190, 0, 100, 40)
         let cancelButton: UIButton = UIButton(frame: cancelButtonFrame)
         let cancelTitle = NSAttributedString(string: cancelButtonTitle, attributes: [NSFontAttributeName:UIFont(name: self.cancelButtonFontName, size: 16.0)!, NSForegroundColorAttributeName:_cancelButtonTitleColor])
-        let cancelButtonTitleHighlighted = NSAttributedString(string: self.cancelButtonTitle, attributes: [NSFontAttributeName:UIFont(name: _cancelButtonFontName, size: 16.0)!, NSForegroundColorAttributeName:_doneButtonHighlightedTitleColor])
+        let cancelButtonTitleHighlighted = NSAttributedString(string: cancelButtonTitle, attributes: [NSFontAttributeName:UIFont(name: _cancelButtonFontName, size: 16.0)!, NSForegroundColorAttributeName:_doneButtonHighlightedTitleColor])
         
         cancelButton.setAttributedTitle(cancelTitle, forState: UIControlState.Normal)
         cancelButton.setAttributedTitle(cancelButtonTitleHighlighted, forState: UIControlState.Highlighted)
@@ -274,6 +259,9 @@ class AMPickerView: NSObject {
         return doneButton
     }
     
+    
+    // MARK: - Public Methods
+    
     func show(title: String, datasource: [String]) {
         topBarTitle = title
         _datasource.removeAll(keepCapacity: false)
@@ -281,23 +269,26 @@ class AMPickerView: NSObject {
         
         setupTitleLabel()
         
-        ownerViewControler.presentViewController(_alertPicker!, animated: true, completion: nil)
+        _ownerViewControler.presentViewController(_alertPicker!, animated: true, completion: nil)
     }
     
     func show() {
-        ownerViewControler.presentViewController(_alertPicker!, animated: true, completion: nil)
+        _ownerViewControler.presentViewController(_alertPicker!, animated: true, completion: nil)
     }
     
     func close() {
-        ownerViewControler.dismissViewControllerAnimated(true, completion: nil)
+        _ownerViewControler.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    
+    // MARK: - AMPrickerView Actions
+    
     func cancelAction(sender: UIButton) {
-        delegate.cancelButtonPressed()
+        _delegate.cancelButtonPressed()
     }
     
     func doneAction(sender: UIButton) {
-        delegate.doneButtonPressed(_selectedIndex)
+        _delegate.doneButtonPressed(_selectedIndex)
     }
 }
 
