@@ -18,7 +18,7 @@ class AMPickerView: NSObject {
     
     // MARK: - Private properties
     
-    private let screenSize = UIScreen.mainScreen().bounds.size
+    private let _screenSize = UIScreen.mainScreen().bounds.size
     
     private var _selectedIndex: Int = 0
     
@@ -200,10 +200,10 @@ class AMPickerView: NSObject {
         
         _alertPicker!.modalInPopover = true
         
-        var widthWithMargin = screenSize.width - 16
+        var widthWithMargin = _screenSize.width - 16
         
         if #available(iOS 9.0, *) {
-            widthWithMargin = screenSize.width - 20
+            widthWithMargin = _screenSize.width - 20
         }
         
         // Create a frame (placeholder/wrapper) for the picker and then create the picker
@@ -222,7 +222,7 @@ class AMPickerView: NSObject {
         //Create the toolbar view - the view witch will hold our 2 buttons
         let toolFrame = CGRectMake(0, 0, widthWithMargin, 40)
         let toolView: UIView = UIView(frame: toolFrame)
-        toolView.backgroundColor = _topBarViewBackgroundColor
+        toolView.backgroundColor = topBarViewBackgroundColor
         
         let maskLayer = CAShapeLayer()
         maskLayer.path = UIBezierPath(roundedRect: toolFrame, byRoundingCorners: [UIRectCorner.TopRight, UIRectCorner.TopLeft], cornerRadii: CGSize(width: 3, height: 3)).CGPath
@@ -242,17 +242,17 @@ class AMPickerView: NSObject {
     }
     
     private func setupTitleLabel() {
-        let title = NSAttributedString(string: self.topBarTitle, attributes: [NSFontAttributeName:UIFont(name: self.topBarViewTextFontName, size: 16.0)!, NSForegroundColorAttributeName:UIColor.whiteColor()])
+        let title = NSAttributedString(string: topBarTitle, attributes: [NSFontAttributeName:UIFont(name: topBarViewTextFontName, size: 16.0)!, NSForegroundColorAttributeName:UIColor.whiteColor()])
         _titleLabel!.attributedText = title
     }
     
     private func buildCancelButton() -> UIButton {
-        let cancelButtonFrame: CGRect = CGRectMake(screenSize.width - 190, 0, 100, 40)
+        let cancelButtonFrame: CGRect = CGRectMake(_screenSize.width - 190, 0, 100, 40)
         let cancelButton: UIButton = UIButton(frame: cancelButtonFrame)
-        let cancelButtonTitle = NSAttributedString(string: self.cancelButtonTitle, attributes: [NSFontAttributeName:UIFont(name: self.cancelButtonFontName, size: 16.0)!, NSForegroundColorAttributeName:_cancelButtonTitleColor])
+        let cancelTitle = NSAttributedString(string: cancelButtonTitle, attributes: [NSFontAttributeName:UIFont(name: self.cancelButtonFontName, size: 16.0)!, NSForegroundColorAttributeName:_cancelButtonTitleColor])
         let cancelButtonTitleHighlighted = NSAttributedString(string: self.cancelButtonTitle, attributes: [NSFontAttributeName:UIFont(name: _cancelButtonFontName, size: 16.0)!, NSForegroundColorAttributeName:_doneButtonHighlightedTitleColor])
         
-        cancelButton.setAttributedTitle(cancelButtonTitle, forState: UIControlState.Normal)
+        cancelButton.setAttributedTitle(cancelTitle, forState: UIControlState.Normal)
         cancelButton.setAttributedTitle(cancelButtonTitleHighlighted, forState: UIControlState.Highlighted)
         
         cancelButton.addTarget(self, action: "cancelAction:", forControlEvents: UIControlEvents.TouchUpInside)
@@ -261,12 +261,12 @@ class AMPickerView: NSObject {
     }
     
     private func buildDoneButton() -> UIButton {
-        let doneButtonFrame: CGRect = CGRectMake(screenSize.width - 100, 0, 80, 40)
+        let doneButtonFrame: CGRect = CGRectMake(_screenSize.width - 100, 0, 80, 40)
         let doneButton: UIButton = UIButton(frame: doneButtonFrame)
-        let doneButtonTitle = NSAttributedString(string: self.doneButtonTitle, attributes: [NSFontAttributeName:UIFont(name: self.doneButtonFontName, size: 16.0)!, NSForegroundColorAttributeName:_doneButtonTitleColor])
-        let doneButtonTitleHighlighted = NSAttributedString(string: self.doneButtonTitle, attributes: [NSFontAttributeName:UIFont(name: self.doneButtonFontName, size: 16.0)!, NSForegroundColorAttributeName:_doneButtonHighlightedTitleColor])
+        let doneTitle = NSAttributedString(string: doneButtonTitle, attributes: [NSFontAttributeName:UIFont(name: doneButtonFontName, size: 16.0)!, NSForegroundColorAttributeName:_doneButtonTitleColor])
+        let doneButtonTitleHighlighted = NSAttributedString(string: doneButtonTitle, attributes: [NSFontAttributeName:UIFont(name: doneButtonFontName, size: 16.0)!, NSForegroundColorAttributeName:_doneButtonHighlightedTitleColor])
         
-        doneButton.setAttributedTitle(doneButtonTitle, forState: UIControlState.Normal)
+        doneButton.setAttributedTitle(doneTitle, forState: UIControlState.Normal)
         doneButton.setAttributedTitle(doneButtonTitleHighlighted, forState: UIControlState.Highlighted)
         
         doneButton.addTarget(self, action: "doneAction:", forControlEvents: UIControlEvents.TouchUpInside)
@@ -324,7 +324,7 @@ extension AMPickerView: UIPickerViewDelegate {
         let pickerLabel = UILabel()
         let titleData = _datasource[row]
         
-        let myTitle = NSAttributedString(string: titleData.uppercaseString, attributes: [NSFontAttributeName:UIFont(name: self.pickerTextFontName, size: 18.0)!, NSForegroundColorAttributeName:self.pickerTextColor])
+        let myTitle = NSAttributedString(string: titleData.uppercaseString, attributes: [NSFontAttributeName:UIFont(name: pickerTextFontName, size: 18.0)!, NSForegroundColorAttributeName:pickerTextColor])
         
         pickerLabel.attributedText = myTitle
         pickerLabel.textAlignment = .Center
