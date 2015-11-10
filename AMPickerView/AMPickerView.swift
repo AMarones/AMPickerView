@@ -20,7 +20,7 @@ class AMPickerView: NSObject {
     
     private let screenSize = UIScreen.mainScreen().bounds.size
     
-    private var selectedIndex: Int = 0
+    private var _selectedIndex: Int = 0
     
     /// Title for done button
     private var _doneButtonTitle = "Done"
@@ -62,13 +62,13 @@ class AMPickerView: NSObject {
     private var _topBarViewBackgroundColor = UIColor(red: 23/255, green: 128/255, blue: 210/255, alpha: 1.0)
     
     /// Intern usage
-    private var alertTitle = ""
+    private let _alertTitle = ""
     
     /// Intern usage
-    private var alertMessage = "\n\n\n\n\n\n\n\n\n\n"
+    private let _alertMessage = "\n\n\n\n\n\n\n\n\n\n"
     
     /// Alert Picker
-    private var alertPicker: UIAlertController?
+    private var _alertPicker: UIAlertController?
     
     /// Title Label
     private var _titleLabel: UILabel?
@@ -196,9 +196,9 @@ class AMPickerView: NSObject {
     }
     
     private func setupActionPicker() {
-        alertPicker = UIAlertController(title: alertTitle, message: alertMessage, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        _alertPicker = UIAlertController(title: _alertTitle, message: _alertMessage, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
-        alertPicker!.modalInPopover = true
+        _alertPicker!.modalInPopover = true
         
         var widthWithMargin = screenSize.width - 16
         
@@ -215,7 +215,7 @@ class AMPickerView: NSObject {
         pickerView.dataSource = self
         
         //Add the picker to the alert controller
-        alertPicker!.view.addSubview(pickerView)
+        _alertPicker!.view.addSubview(pickerView)
         
         NSFoundationVersionNumber_iOS_8_0
         
@@ -238,7 +238,7 @@ class AMPickerView: NSObject {
         toolView.addSubview(buildCancelButton())
         toolView.addSubview(buildDoneButton())
         
-        self.alertPicker!.view.addSubview(toolView)
+        _alertPicker!.view.addSubview(toolView)
     }
     
     private func setupTitleLabel() {
@@ -281,11 +281,11 @@ class AMPickerView: NSObject {
         
         setupTitleLabel()
         
-        ownerViewControler.presentViewController(alertPicker!, animated: true, completion: nil)
+        ownerViewControler.presentViewController(_alertPicker!, animated: true, completion: nil)
     }
     
     func show() {
-        ownerViewControler.presentViewController(alertPicker!, animated: true, completion: nil)
+        ownerViewControler.presentViewController(_alertPicker!, animated: true, completion: nil)
     }
     
     func close() {
@@ -297,7 +297,7 @@ class AMPickerView: NSObject {
     }
     
     func doneAction(sender: UIButton) {
-        delegate.doneButtonPressed(selectedIndex)
+        delegate.doneButtonPressed(_selectedIndex)
     }
 }
 
@@ -333,6 +333,6 @@ extension AMPickerView: UIPickerViewDelegate {
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.selectedIndex = row
+        _selectedIndex = row
     }
 }
