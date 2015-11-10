@@ -267,6 +267,8 @@ class AMPickerView: NSObject {
         _datasource.removeAll(keepCapacity: false)
         _datasource = datasource
         
+        _pickerView?.reloadAllComponents()
+        
         setupTitleLabel()
         
         _ownerViewControler.presentViewController(_alertPicker!, animated: true, completion: nil)
