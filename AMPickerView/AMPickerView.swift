@@ -70,6 +70,12 @@ class AMPickerView: NSObject {
     /// Alert Picker
     private var alertPicker: UIAlertController?
     
+    /// Title Label
+    private var _titleLabel: UILabel?
+    
+    /// Datasource
+    private var _datasource = [String]()
+    
     /// The parent (owner) view controller
     private var ownerViewControler: UIViewController!
     
@@ -78,7 +84,6 @@ class AMPickerView: NSObject {
     
     var delegate: AMPickerViewDelegate!
     
-    var datasource = [String]()
     
     var topBarViewBackgroundColor: UIColor {
         get  {
@@ -170,12 +175,24 @@ class AMPickerView: NSObject {
         }
     }
     
-    convenience init(delegate: AMPickerViewDelegate, datasource: [String], ownerViewControler: UIViewController) {
+    convenience init(delegate: AMPickerViewDelegate, ownerViewControler: UIViewController) {
         self.init()
         
         self.delegate = delegate
-        self.datasource = datasource
         self.ownerViewControler = ownerViewControler
+        
+        setupActionPicker()
+    }
+    
+    convenience init(delegate: AMPickerViewDelegate, title: String, datasource: [String], ownerViewControler: UIViewController) {
+        self.init()
+        
+        self.delegate = delegate
+        self.topBarTitle = title
+        self.ownerViewControler = ownerViewControler
+        _datasource = datasource
+        
+        setupActionPicker()
     }
     
     private func setupActionPicker() {
@@ -211,25 +228,29 @@ class AMPickerView: NSObject {
         maskLayer.path = UIBezierPath(roundedRect: toolFrame, byRoundingCorners: [UIRectCorner.TopRight, UIRectCorner.TopLeft], cornerRadii: CGSize(width: 3, height: 3)).CGPath
         toolView.layer.mask = maskLayer
         
-        
         let titleFrame: CGRect = CGRectMake(16, 0, 100, 40) // CGRectMake(left), top, width, height) - left and top are like margins
-        let titleView: UILabel = UILabel(frame: titleFrame)
-        let title = NSAttributedString(string: _topBarTitle, attributes: [NSFontAttributeName:UIFont(name: _topBarViewTextFontName, size: 16.0)!, NSForegroundColorAttributeName:UIColor.whiteColor()])
-        titleView.attributedText = title
+        _titleLabel = UILabel(frame: titleFrame)
+        
+        setupTitleLabel()
         
         //add the toolbar to the alert controller
-        toolView.addSubview(titleView)
+        toolView.addSubview(_titleLabel!)
         toolView.addSubview(buildCancelButton())
         toolView.addSubview(buildDoneButton())
         
-        alertPicker!.view.addSubview(toolView)
+        self.alertPicker!.view.addSubview(toolView)
+    }
+    
+    private func setupTitleLabel() {
+        let title = NSAttributedString(string: self.topBarTitle, attributes: [NSFontAttributeName:UIFont(name: self.topBarViewTextFontName, size: 16.0)!, NSForegroundColorAttributeName:UIColor.whiteColor()])
+        _titleLabel!.attributedText = title
     }
     
     private func buildCancelButton() -> UIButton {
         let cancelButtonFrame: CGRect = CGRectMake(screenSize.width - 190, 0, 100, 40)
         let cancelButton: UIButton = UIButton(frame: cancelButtonFrame)
-        let cancelButtonTitle = NSAttributedString(string: _cancelButtonTitle, attributes: [NSFontAttributeName:UIFont(name: _cancelButtonFontName, size: 16.0)!, NSForegroundColorAttributeName:_cancelButtonTitleColor])
-        let cancelButtonTitleHighlighted = NSAttributedString(string: _cancelButtonTitle, attributes: [NSFontAttributeName:UIFont(name: _cancelButtonFontName, size: 16.0)!, NSForegroundColorAttributeName:_doneButtonHighlightedTitleColor])
+        let cancelButtonTitle = NSAttributedString(string: self.cancelButtonTitle, attributes: [NSFontAttributeName:UIFont(name: self.cancelButtonFontName, size: 16.0)!, NSForegroundColorAttributeName:_cancelButtonTitleColor])
+        let cancelButtonTitleHighlighted = NSAttributedString(string: self.cancelButtonTitle, attributes: [NSFontAttributeName:UIFont(name: _cancelButtonFontName, size: 16.0)!, NSForegroundColorAttributeName:_doneButtonHighlightedTitleColor])
         
         cancelButton.setAttributedTitle(cancelButtonTitle, forState: UIControlState.Normal)
         cancelButton.setAttributedTitle(cancelButtonTitleHighlighted, forState: UIControlState.Highlighted)
@@ -242,8 +263,8 @@ class AMPickerView: NSObject {
     private func buildDoneButton() -> UIButton {
         let doneButtonFrame: CGRect = CGRectMake(screenSize.width - 100, 0, 80, 40)
         let doneButton: UIButton = UIButton(frame: doneButtonFrame)
-        let doneButtonTitle = NSAttributedString(string: _doneButtonTitle, attributes: [NSFontAttributeName:UIFont(name: _doneButtonFontName, size: 16.0)!, NSForegroundColorAttributeName:_doneButtonTitleColor])
-        let doneButtonTitleHighlighted = NSAttributedString(string: _doneButtonTitle, attributes: [NSFontAttributeName:UIFont(name: _doneButtonFontName, size: 16.0)!, NSForegroundColorAttributeName:_doneButtonHighlightedTitleColor])
+        let doneButtonTitle = NSAttributedString(string: self.doneButtonTitle, attributes: [NSFontAttributeName:UIFont(name: self.doneButtonFontName, size: 16.0)!, NSForegroundColorAttributeName:_doneButtonTitleColor])
+        let doneButtonTitleHighlighted = NSAttributedString(string: self.doneButtonTitle, attributes: [NSFontAttributeName:UIFont(name: self.doneButtonFontName, size: 16.0)!, NSForegroundColorAttributeName:_doneButtonHighlightedTitleColor])
         
         doneButton.setAttributedTitle(doneButtonTitle, forState: UIControlState.Normal)
         doneButton.setAttributedTitle(doneButtonTitleHighlighted, forState: UIControlState.Highlighted)
@@ -253,8 +274,17 @@ class AMPickerView: NSObject {
         return doneButton
     }
     
+    func show(title: String, datasource: [String]) {
+        topBarTitle = title
+        _datasource.removeAll(keepCapacity: false)
+        _datasource = datasource
+        
+        setupTitleLabel()
+        
+        ownerViewControler.presentViewController(alertPicker!, animated: true, completion: nil)
+    }
+    
     func show() {
-        setupActionPicker()
         ownerViewControler.presentViewController(alertPicker!, animated: true, completion: nil)
     }
     
@@ -281,7 +311,7 @@ extension AMPickerView: UIPickerViewDataSource {
     }
     
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return datasource.count
+        return _datasource.count
     }
 }
 
@@ -292,9 +322,9 @@ extension AMPickerView: UIPickerViewDelegate {
     
     func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView {
         let pickerLabel = UILabel()
-        let titleData = datasource[row]
+        let titleData = _datasource[row]
         
-        let myTitle = NSAttributedString(string: titleData.uppercaseString, attributes: [NSFontAttributeName:UIFont(name: _pickerTextFontName, size: 18.0)!, NSForegroundColorAttributeName:_pickerTextColor])
+        let myTitle = NSAttributedString(string: titleData.uppercaseString, attributes: [NSFontAttributeName:UIFont(name: self.pickerTextFontName, size: 18.0)!, NSForegroundColorAttributeName:self.pickerTextColor])
         
         pickerLabel.attributedText = myTitle
         pickerLabel.textAlignment = .Center
@@ -303,6 +333,6 @@ extension AMPickerView: UIPickerViewDelegate {
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        selectedIndex = row
+        self.selectedIndex = row
     }
 }
